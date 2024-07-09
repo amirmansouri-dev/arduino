@@ -1,0 +1,562 @@
+openapi: 3.0.3
+info:
+  title: Laravel
+  description: ''
+  version: 1.0.0
+servers:
+  -
+    url: 'http://localhost'
+paths:
+  /api/register:
+    post:
+      summary: 'User Registration'
+      operationId: userRegistration
+      description: ''
+      parameters: []
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  user:
+                    id: 1
+                    name: 'John Doe'
+                    email: user@example.com
+                    created_at: '2021-03-01T00:00:00.000000Z'
+                    updated_at: '2021-03-01T00:00:00.000000Z'
+                  token: eyJ0eXAiOiJKV1QiLCJh...
+                properties:
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      name:
+                        type: string
+                        example: 'John Doe'
+                      email:
+                        type: string
+                        example: user@example.com
+                      created_at:
+                        type: string
+                        example: '2021-03-01T00:00:00.000000Z'
+                      updated_at:
+                        type: string
+                        example: '2021-03-01T00:00:00.000000Z'
+                  token:
+                    type: string
+                    example: eyJ0eXAiOiJKV1QiLCJh...
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'The name of the user.'
+                  example: 'John Doe'
+                email:
+                  type: string
+                  description: 'The email of the user.'
+                  example: user@example.com
+                password:
+                  type: string
+                  description: 'The password of the user.'
+                  example: secret
+              required:
+                - name
+                - email
+                - password
+      security: []
+  /api/login:
+    post:
+      summary: 'User Login'
+      operationId: userLogin
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  user:
+                    id: 1
+                    name: 'John Doe'
+                    email: user@example.com
+                    email_verified_at: '2021-03-01T00:00:00.000000Z'
+                    created_at: '2021-03-01T00:00:00.000000Z'
+                    updated_at: '2021-03-01T00:00:00.000000Z'
+                  access_token: eyJ0eXAiOiJKV1QiLCJh...
+                  token_type: Bearer
+                  expires_at: '2021-03-01T00:00:00.000000Z'
+                properties:
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      name:
+                        type: string
+                        example: 'John Doe'
+                      email:
+                        type: string
+                        example: user@example.com
+                      email_verified_at:
+                        type: string
+                        example: '2021-03-01T00:00:00.000000Z'
+                      created_at:
+                        type: string
+                        example: '2021-03-01T00:00:00.000000Z'
+                      updated_at:
+                        type: string
+                        example: '2021-03-01T00:00:00.000000Z'
+                  access_token:
+                    type: string
+                    example: eyJ0eXAiOiJKV1QiLCJh...
+                  token_type:
+                    type: string
+                    example: Bearer
+                  expires_at:
+                    type: string
+                    example: '2021-03-01T00:00:00.000000Z'
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: 'The email of the user.'
+                  example: user@example.com
+                password:
+                  type: string
+                  description: 'The password of the user.'
+                  example: secret
+              required:
+                - email
+                - password
+      security: []
+  /api/reset-password:
+    post:
+      summary: 'Reset Password'
+      operationId: resetPassword
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Password reset successfully'
+                properties:
+                  message:
+                    type: string
+                    example: 'Password reset successfully'
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: 'The email of the user.'
+                  example: user@example.com
+                password:
+                  type: string
+                  description: 'The new password of the user.'
+                  example: newpassword
+              required:
+                - email
+                - password
+      security: []
+  /api/refresh-token:
+    post:
+      summary: 'Refresh Token'
+      operationId: refreshToken
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  access_token: new_access_token
+                  access_token_expires_at: '2021-03-01T00:00:00.000000Z'
+                properties:
+                  access_token:
+                    type: string
+                    example: new_access_token
+                  access_token_expires_at:
+                    type: string
+                    example: '2021-03-01T00:00:00.000000Z'
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                refresh_token:
+                  type: string
+                  description: 'The refresh token of the user.'
+                  example: old_refresh_token
+              required:
+                - refresh_token
+      security: []
+  /api/me:
+    get:
+      summary: 'Get Authenticated User'
+      operationId: getAuthenticatedUser
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  id: 1
+                  name: 'John Doe'
+                  email: user@example.com
+                  email_verified_at: '2021-03-01T00:00:00.000000Z'
+                  created_at: '2021-03-01T00:00:00.000000Z'
+                  updated_at: '2021-03-01T00:00:00.000000Z'
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  name:
+                    type: string
+                    example: 'John Doe'
+                  email:
+                    type: string
+                    example: user@example.com
+                  email_verified_at:
+                    type: string
+                    example: '2021-03-01T00:00:00.000000Z'
+                  created_at:
+                    type: string
+                    example: '2021-03-01T00:00:00.000000Z'
+                  updated_at:
+                    type: string
+                    example: '2021-03-01T00:00:00.000000Z'
+      tags:
+        - Authentication
+      security: []
+  /api/logout:
+    post:
+      summary: 'User Logout'
+      operationId: userLogout
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Successfully logged out'
+                properties:
+                  message:
+                    type: string
+                    example: 'Successfully logged out'
+      tags:
+        - Authentication
+      security: []
+  '/api/update-role/{id}':
+    post:
+      summary: 'Update User Role'
+      operationId: updateUserRole
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'User role updated successfully'
+                properties:
+                  message:
+                    type: string
+                    example: 'User role updated successfully'
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                role:
+                  type: string
+                  description: 'The new role of the user.'
+                  example: admin
+              required:
+                - role
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the update role.'
+        example: sapiente
+        required: true
+        schema:
+          type: string
+  /api/users:
+    get:
+      summary: 'Get All Users'
+      operationId: getAllUsers
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  users:
+                    -
+                      id: 1
+                      name: 'John Doe'
+                      email: john@example.com
+                      role: user
+                      created_at: '2021-01-01T00:00:00.000000Z'
+                      updated_at: '2021-01-01T00:00:00.000000Z'
+                properties:
+                  users:
+                    type: array
+                    example:
+                      -
+                        id: 1
+                        name: 'John Doe'
+                        email: john@example.com
+                        role: user
+                        created_at: '2021-01-01T00:00:00.000000Z'
+                        updated_at: '2021-01-01T00:00:00.000000Z'
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        name:
+                          type: string
+                          example: 'John Doe'
+                        email:
+                          type: string
+                          example: john@example.com
+                        role:
+                          type: string
+                          example: user
+                        created_at:
+                          type: string
+                          example: '2021-01-01T00:00:00.000000Z'
+                        updated_at:
+                          type: string
+                          example: '2021-01-01T00:00:00.000000Z'
+      tags:
+        - 'User Management'
+      security: []
+  /api/history-connect-user:
+    get:
+      summary: 'Get User Login History'
+      operationId: getUserLoginHistory
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  user_logins:
+                    -
+                      id: 1
+                      user_id: 1
+                      login_time: '2021-01-01T00:00:00.000000Z'
+                      logout_time: '2021-01-01T01:00:00.000000Z'
+                properties:
+                  user_logins:
+                    type: array
+                    example:
+                      -
+                        id: 1
+                        user_id: 1
+                        login_time: '2021-01-01T00:00:00.000000Z'
+                        logout_time: '2021-01-01T01:00:00.000000Z'
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        user_id:
+                          type: integer
+                          example: 1
+                        login_time:
+                          type: string
+                          example: '2021-01-01T00:00:00.000000Z'
+                        logout_time:
+                          type: string
+                          example: '2021-01-01T01:00:00.000000Z'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error: Unauthorized
+                properties:
+                  error:
+                    type: string
+                    example: Unauthorized
+      tags:
+        - 'User Management'
+      security: []
+  '/api/users/{id}':
+    put:
+      summary: 'Update User'
+      operationId: updateUser
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'User updated successfully'
+                properties:
+                  message:
+                    type: string
+                    example: 'User updated successfully'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error: Unauthorized
+                properties:
+                  error:
+                    type: string
+                    example: Unauthorized
+      tags:
+        - 'User Management'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'The name of the user.'
+                  example: 'John Doe'
+                email:
+                  type: string
+                  description: 'The email of the user.'
+                  example: john@example.com
+                role:
+                  type: string
+                  description: 'The role of the user.'
+                  example: admin
+              required:
+                - name
+                - email
+      security: []
+    delete:
+      summary: 'Delete User'
+      operationId: deleteUser
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'User deleted successfully'
+                properties:
+                  message:
+                    type: string
+                    example: 'User deleted successfully'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error: Unauthorized
+                properties:
+                  error:
+                    type: string
+                    example: Unauthorized
+      tags:
+        - 'User Management'
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the user.'
+        example: non
+        required: true
+        schema:
+          type: string
+tags:
+  -
+    name: Authentication
+    description: "\nAPI for user authentication and authorization."
+  -
+    name: 'User Management'
+    description: "\nAPI for managing users."
