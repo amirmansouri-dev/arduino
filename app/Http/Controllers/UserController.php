@@ -84,6 +84,7 @@ class UserController extends Controller
             return response()->json(['error' => 'Unauthorized'], 403);
         }
 
+
         $userToUpdate = User::findOrFail($id);
         $userToUpdate->update($request->all());
 
